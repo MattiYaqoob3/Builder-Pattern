@@ -1,52 +1,61 @@
 package com.example.demo.models;
 
-import org.springframework.data.annotation.Id;
-
-import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
-@Document(collection = "users")
 public class Users {
 
-    @Id
-    private String id;
+
+    private String UserName;
+    private String Password;
 
 
-    private String username;
-
-
-    private String password;
-
-
-    private String phonenumber;
-
-
-    private String address;
-
-
-
-
-
-    public Users() {
+    private Users (UserBuilder builder) {
+       this.UserName = builder.UserName;
+       this.Password = builder.Password;
     }
 
-    public String getId() {
-        return id;
+
+    // this is builder class
+    public static class UserBuilder{
+
+        private String UserName;
+        private String Password;
+
+
+
+        public UserBuilder(String userName, String password) {
+            UserName = userName;
+            Password = password;
+        }
+
+        public UserBuilder() {
+
+        }
+
+        public UserBuilder setUsername(String userName){
+            this.UserName = userName;
+            return this;
+        }
+        public UserBuilder setPassword(String password){
+            this.Password = password;
+            return this;
+        }
+
+        public Users build(){
+            return new Users(this);
+        }
     }
 
-    public String getUsername() {
-        return username;
+
+    @Override
+    public String toString() {
+        return "Users{" +
+                "UserName='" + UserName + '\'' +
+                ", Password='" + Password + '\'' +
+                '}';
     }
 
-    public String getPassword() {
-        return password;
-    }
 
-    public String getPhonenumber() {
-        return phonenumber;
-    }
 
-    public String getAddress() {
-        return address;
-    }
 }
